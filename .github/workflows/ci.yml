@@ -84,13 +84,13 @@ jobs:
             assert: "ndebug"
             coverage: "nocov"
             boost: "--build-boost"
-            icu: "--build-icu --with-icu"
+            icu: ""
             zmq: "--build-zmq"
             cc: "clang"
-            flags: "-Os -fPIE"
+            flags: "-Os -fPIE -DBOOST_NO_CXX98_FUNCTION_BASE"
             options: "--enable-isystem"
             packager: "brew"
-            packages: ""
+            packages: "icu4c"
 
           - os: macos-latest
             cxx: "clang++"
@@ -99,13 +99,13 @@ jobs:
             assert: "ndebug"
             coverage: "nocov"
             boost: "--build-boost"
-            icu: "--build-icu --with-icu"
+            icu: ""
             zmq: "--build-zmq"
             cc: "clang"
-            flags: "-Os -fvisibility=hidden -fPIE"
+            flags: "-Os -fvisibility=hidden -fPIE -DBOOST_NO_CXX98_FUNCTION_BASE"
             options: "--enable-isystem"
             packager: "brew"
-            packages: ""
+            packages: "icu4c"
 
 
     runs-on: ${{ matrix.os }}
@@ -187,7 +187,7 @@ jobs:
 
       - name: Coveralls.io Upload
         if: ${{ matrix.coverage == 'cov' }}
-        uses: coverallsapp/github-action@v2.2.3
+        uses: coverallsapp/github-action@v2.3.0
         with:
           format: lcov
           files: "./coverage.info"
@@ -227,11 +227,12 @@ jobs:
 
 
       - name: Failure display otool output
-        if: ${{ failure() && (matrix.os == 'macos-latest') }}
+        if: ${{ failure() && startsWith(matrix.os, 'macos') }}
         run: |
           otool -L ${{ github.workspace }}/test/.libs/libbitcoin-explorer-test
+
       - name: Failure display DYLD_PRINT_LIBRARIES
-        if: ${{ failure() && (matrix.os == 'macos-latest') }}
+        if: ${{ failure() && startsWith(matrix.os, 'macos') }}
         run: |
           DYLD_PRINT_LIBRARIES=1 ${{ github.workspace }}/test/.libs/libbitcoin-explorer-test
 
@@ -315,13 +316,13 @@ jobs:
             assert: "ndebug"
             coverage: "nocov"
             boost: "--build-boost"
-            icu: "--build-icu --with-icu"
+            icu: ""
             zmq: "--build-zmq"
             cc: "clang"
-            flags: "-Os -fPIE"
+            flags: "-Os -fPIE -DBOOST_NO_CXX98_FUNCTION_BASE"
             options: ""
             packager: "brew"
-            packages: ""
+            packages: "icu4c"
 
           - os: macos-latest
             cxx: "clang++"
@@ -330,13 +331,13 @@ jobs:
             assert: "ndebug"
             coverage: "nocov"
             boost: "--build-boost"
-            icu: "--build-icu --with-icu"
+            icu: ""
             zmq: "--build-zmq"
             cc: "clang"
-            flags: "-Os -fvisibility=hidden -fPIE"
+            flags: "-Os -fvisibility=hidden -fPIE -DBOOST_NO_CXX98_FUNCTION_BASE"
             options: ""
             packager: "brew"
-            packages: ""
+            packages: "icu4c"
 
 
     runs-on: ${{ matrix.os }}
@@ -421,7 +422,7 @@ jobs:
 
       - name: Coveralls.io Upload
         if: ${{ matrix.coverage == 'cov' }}
-        uses: coverallsapp/github-action@v2.2.3
+        uses: coverallsapp/github-action@v2.3.0
         with:
           format: lcov
           files: "./coverage.info"
@@ -461,11 +462,12 @@ jobs:
 
 
       - name: Failure display otool output
-        if: ${{ failure() && (matrix.os == 'macos-latest') }}
+        if: ${{ failure() && startsWith(matrix.os, 'macos') }}
         run: |
           otool -L ${{ github.workspace }}/test/.libs/libbitcoin-explorer-test
+
       - name: Failure display DYLD_PRINT_LIBRARIES
-        if: ${{ failure() && (matrix.os == 'macos-latest') }}
+        if: ${{ failure() && startsWith(matrix.os, 'macos') }}
         run: |
           DYLD_PRINT_LIBRARIES=1 ${{ github.workspace }}/test/.libs/libbitcoin-explorer-test
 
@@ -624,7 +626,7 @@ jobs:
 
       - name: Coveralls.io Upload
         if: ${{ matrix.coverage == 'cov' }}
-        uses: coverallsapp/github-action@v2.2.3
+        uses: coverallsapp/github-action@v2.3.0
         with:
           format: lcov
           files: "./coverage.info"
@@ -664,11 +666,12 @@ jobs:
 
 
       - name: Failure display otool output
-        if: ${{ failure() && (matrix.os == 'macos-latest') }}
+        if: ${{ failure() && startsWith(matrix.os, 'macos') }}
         run: |
           otool -L ${{ github.workspace }}/test/.libs/libbitcoin-explorer-test
+
       - name: Failure display DYLD_PRINT_LIBRARIES
-        if: ${{ failure() && (matrix.os == 'macos-latest') }}
+        if: ${{ failure() && startsWith(matrix.os, 'macos') }}
         run: |
           DYLD_PRINT_LIBRARIES=1 ${{ github.workspace }}/test/.libs/libbitcoin-explorer-test
 
@@ -694,25 +697,25 @@ jobs:
 
       matrix:
         include:
-          - os: windows-latest
+          - os: windows-2019
             configuration: "StaticRelease"
             platform: "Win32"
             version: "vs2022"
             tests: "generated,obsolete,offline,config,stub"
 
-          - os: windows-latest
+          - os: windows-2019
             configuration: "StaticDebug"
             platform: "Win32"
             version: "vs2022"
             tests: "generated,obsolete,offline,config,stub"
 
-          - os: windows-latest
+          - os: windows-2019
             configuration: "StaticRelease"
             platform: "x64"
             version: "vs2022"
             tests: "generated,obsolete,offline,config,stub"
 
-          - os: windows-latest
+          - os: windows-2019
             configuration: "StaticDebug"
             platform: "x64"
             version: "vs2022"

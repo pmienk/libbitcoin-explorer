@@ -70,8 +70,8 @@ ICU_ARCHIVE="icu4c-55_2-src.tgz"
 
 # ZMQ archive.
 #------------------------------------------------------------------------------
-ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.4/zeromq-4.3.4.tar.gz"
-ZMQ_ARCHIVE="zeromq-4.3.4.tar.gz"
+ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.5/zeromq-4.3.5.tar.gz"
+ZMQ_ARCHIVE="zeromq-4.3.5.tar.gz"
 
 # Boost archive.
 #------------------------------------------------------------------------------
@@ -591,7 +591,7 @@ unpack_from_tarball()
     local COMPRESSION=$3
     local BUILD=$4
 
-    display_heading_message "Prepairing to aquire $ARCHIVE"
+    display_heading_message "Preparing to acquire $ARCHIVE"
 
     if [[ ! ($BUILD) ]]; then
         display_message "Skipping unpack of $ARCHIVE..."
@@ -637,7 +637,7 @@ build_from_tarball()
         return
     fi
 
-    display_heading_message "Prepairing to build $ARCHIVE"
+    display_heading_message "Preparing to build $ARCHIVE"
 
     # Because ICU tools don't know how to locate internal dependencies.
     if [[ ($ARCHIVE == "$ICU_ARCHIVE") ]]; then
@@ -695,7 +695,7 @@ create_from_github()
 
     FORK="$ACCOUNT/$REPO"
 
-    display_heading_message "Prepairing to aquire $FORK/$BRANCH"
+    display_heading_message "Preparing to acquire $FORK/$BRANCH"
 
     if [[ -d "$REPO" ]]; then
         if [[ true ]]; then
@@ -730,7 +730,7 @@ build_from_github()
     # Join generated and command line options.
     local CONFIGURATION=("${OPTIONS[@]}" "$@")
 
-    display_heading_message "Prepairing to build $REPO"
+    display_heading_message "Preparing to build $REPO"
 
     # Build the local repository clone.
     make_project_directory "$REPO" "$JOBS" "$TEST" "${CONFIGURATION[@]}"
@@ -744,13 +744,8 @@ cmake_tests()
 
     # Build and run unit tests relative to the primary directory.
     # VERBOSE=1 ensures test runner output sent to console (gcc).
-    make -j"$JOBS" test "VERBOSE=1"
+    CTEST_OUTPUT_ON_FAILURE=ON make -j"$JOBS" test "VERBOSE=1"
     local RESULT=$?
-
-    # Test runners emit to the test.log file.
-    if [[ -e "test.log" ]]; then
-        cat "test.log"
-    fi
 
     if [[ $RESULT -ne 0 ]]; then
         exit $RESULT
@@ -806,7 +801,7 @@ build_from_github_cmake()
     # Join generated and command line options.
     local CONFIGURATION=("${OPTIONS[@]}" "$@")
 
-    display_heading_message "Prepairing to build $REPO"
+    display_heading_message "Preparing to build $REPO"
 
     # Build the local repository clone.
     cmake_project_directory "$REPO" "$PRESET" "$JOBS" "$TEST" "${CONFIGURATION[@]}"
@@ -892,7 +887,7 @@ build_from_tarball_boost()
         return
     fi
 
-    display_heading_message "Prepairing to build $ARCHIVE"
+    display_heading_message "Preparing to build $ARCHIVE"
 
     local TARGET="build-$ARCHIVE"
 
