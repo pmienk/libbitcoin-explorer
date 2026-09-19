@@ -959,6 +959,7 @@ jobs:
         continue-on-error: true
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
         shell: bash
+        working-directory: 'libbitcoin-explorer'
         run: |
           rm -rf ${{ github.workspace }}/libbitcoin-system
 
