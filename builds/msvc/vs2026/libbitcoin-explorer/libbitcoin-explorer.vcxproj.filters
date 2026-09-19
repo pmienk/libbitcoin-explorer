@@ -31,20 +31,11 @@
     <Filter Include="src">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000007}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\.deps">
+    <Filter Include="src\commands">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000008}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\commands">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000009}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\commands\.deps">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000A}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\config">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\config\.deps">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000C}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000009}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
